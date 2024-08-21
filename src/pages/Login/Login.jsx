@@ -1,10 +1,16 @@
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
+import { Link } from "react-router-dom";
+
 const Login = () => {
+  const { signIn } = useContext(AuthContext);
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
     console.log(email, password);
+    signIn(email, password);
   };
   return (
     <div className="hero bg-base-200 min-h-screen">
@@ -45,6 +51,9 @@ const Login = () => {
             </div>
             <h1 className="text-2xl font-bold">Login now!</h1>
           </form>
+          <p>
+            New Here? Please<Link to="/signup">Sign Up</Link>
+          </p>
         </div>
       </div>
     </div>
