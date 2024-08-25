@@ -9,9 +9,10 @@ const FoodCard = ({ item }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const handleAddToCart = (item) => {
+
+  const handleAddToCart = () => {
     console.log(item);
-    if (user && user.email) {
+    if (user) {
       const cartItem = {
         menuItemId: _id,
         name,
@@ -19,11 +20,10 @@ const FoodCard = ({ item }) => {
         price,
         email: user.email,
       };
+
       fetch("http://localhost:5000/carts", {
         method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
+        headers: { "content-type": "application/json" },
         body: JSON.stringify(cartItem),
       })
         .then((res) => res.json())
@@ -36,24 +36,70 @@ const FoodCard = ({ item }) => {
               showConfirmButton: false,
               timer: 1500,
             });
-          } else {
-            Swal.fire({
-              title: "Please login to order the food",
-
-              icon: "warning",
-              showCancelButton: true,
-              confirmButtonColor: "#3085d6",
-              cancelButtonColor: "#d33",
-              confirmButtonText: "Please Login",
-            }).then((result) => {
-              if (result.isConfirmed) {
-                navigate("/login", { state: { from: location } });
-              }
-            });
           }
         });
+    } else {
+      Swal.fire({
+        title: "Please login to order the food",
+
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Please Login",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate("/login", { state: { from: location } });
+        }
+      });
     }
   };
+
+  // const handleAddToCart = (item) => {
+  //   console.log(item);
+  //   if (user && user.email) {
+  //     const cartItem = {
+  //       menuItemId: _id,
+  //       name,
+  //       image,
+  //       price,
+  //       email: user.email,
+  //     };
+  //     fetch("http://localhost:5000/carts", {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: JSON.stringify(cartItem),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data.insertedId) {
+  //           Swal.fire({
+  //             position: "top-end",
+  //             icon: "success",
+  //             title: "Order added in the cart",
+  //             showConfirmButton: false,
+  //             timer: 1500,
+  //           });
+  //         } else {
+  //           Swal.fire({
+  //             title: "Please login to order the food",
+
+  //             icon: "warning",
+  //             showCancelButton: true,
+  //             confirmButtonColor: "#3085d6",
+  //             cancelButtonColor: "#d33",
+  //             confirmButtonText: "Please Login",
+  //           }).then((result) => {
+  //             if (result.isConfirmed) {
+  //               navigate("/login", { state: { from: location } });
+  //             }
+  //           });
+  //         }
+  //       });
+  //   }
+  // };
 
   return (
     <div className="card bg-base-100 w-96 shadow-xl">
@@ -66,10 +112,7 @@ const FoodCard = ({ item }) => {
 
         <p>{recipe}</p>
         <div className="card-actions justify-end">
-          <button
-            onClick={() => handleAddToCart(item)}
-            className="btn btn-primary"
-          >
+          <button onClick={() => handleAddToCart()} className="btn btn-primary">
             Add to Cart
           </button>
         </div>
