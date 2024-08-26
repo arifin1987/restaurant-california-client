@@ -15,13 +15,13 @@ const Dashboard = () => {
           Open drawer
         </label>
       </div>
-      <div className="drawer-side">
+      <div className="drawer-side bg-[#D1B067]">
         <label
           htmlFor="my-drawer-2"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+        <ul className="menu   min-h-full w-80 p-4">
           {/* Sidebar content here */}
           <li>
             <Link>
@@ -30,14 +30,14 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link>
+            <Link to="/dashboard/mycart">
               <FaShoppingCart />
               My Cart
             </Link>
           </li>
           <div className="divider"></div>
           <li>
-            <Link>
+            <Link to="/">
               <FaHome />
               Home
             </Link>
