@@ -1,7 +1,9 @@
 import { Link, Outlet } from "react-router-dom";
 import { FaShoppingCart, FaHome } from "react-icons/fa";
+import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
+  const [cart] = useCart();
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -33,6 +35,7 @@ const Dashboard = () => {
             <Link to="/dashboard/mycart">
               <FaShoppingCart />
               My Cart
+              <div className="badge badge-secondary">{cart.length || 0}</div>
             </Link>
           </li>
           <div className="divider"></div>
