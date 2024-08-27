@@ -2,20 +2,39 @@ import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
-
+  const navigate = useNavigate();
   const { createUser } = useContext(AuthContext);
   const onSubmit = (data) => {
     createUser(data.email, data.password).then((result) => {
       const loggedUser = result.user;
       console.log(loggedUser);
+      const saveUser = { name: data.name, email: data.email };
+      fetch("http://localhost:5000/users", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(saveUser),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+      reset();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User Created Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate("/");
     });
   };
   return (
