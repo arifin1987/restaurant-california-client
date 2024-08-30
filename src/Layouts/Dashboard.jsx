@@ -4,6 +4,7 @@ import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
   const [cart] = useCart();
+  const isAdmin = true;
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -25,19 +26,47 @@ const Dashboard = () => {
         ></label>
         <ul className="menu   min-h-full w-80 p-4">
           {/* Sidebar content here */}
-          <li>
-            <Link>
-              <FaHome />
-              User Home
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/mycart">
-              <FaShoppingCart />
-              My Cart
-              <div className="badge badge-secondary">{cart.length || 0}</div>
-            </Link>
-          </li>
+          {isAdmin ? (
+            <>
+              <li>
+                <Link to="/dashboard/home">
+                  <FaHome />
+                  Admin Home
+                </Link>
+              </li>
+              <li>
+                <Link>Add Items</Link>
+              </li>
+              <li>
+                <Link>Manage Items</Link>
+              </li>
+              <li>
+                <Link>Manage Bookings</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/allusers">All Users</Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <Link>
+                  <FaHome />
+                  User Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/dashboard/mycart">
+                  <FaShoppingCart />
+                  My Cart
+                  <div className="badge badge-secondary">
+                    {cart.length || 0}
+                  </div>
+                </Link>
+              </li>
+            </>
+          )}
+          {/* This portion will remain same for admin user as well as general users */}
           <div className="divider"></div>
           <li>
             <Link to="/">
