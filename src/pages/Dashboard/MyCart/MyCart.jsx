@@ -39,7 +39,8 @@ const MyCart = () => {
     });
   };
   return (
-    <div>
+    // Make width full using w-full
+    <div className="w-full">
       <Helmet>
         <title>Restaurant California | My Cart</title>
       </Helmet>
